@@ -11,7 +11,7 @@ char *choices[] = {
 			"Choice 1", "Choice 2",
 			"Choice 3", "Choice 4",
 			"Choice 5", "Choice 6",
-			"Exit",
+			"Back", "Exit",
 			(char *)NULL,
 		};
 void print_in_middle(WINDOW *win, int starty, int startx, int width, char *string, chtype color);
@@ -25,6 +25,7 @@ int print_options_menu()
 	int n_choices, i;
 	WINDOW *my_menu_win;
 	int menu_x, menu_y;
+	my_choice[0] = '\0';
 	
 	initscr();
 	noecho();
@@ -32,7 +33,7 @@ int print_options_menu()
 	cbreak();
 	curs_set(FALSE);
 	keypad(stdscr, true);
-	raw();
+	cbreak();
 
 	init_pair(1, COLOR_BLACK, COLOR_WHITE);
 	init_pair(5, COLOR_WHITE, COLOR_BLACK);
@@ -108,10 +109,15 @@ int print_options_menu()
 
 				break;
 			}
-			break;
+
+			default:
+				break;
 		}
 		if (strcmp(my_choice, "Exit") == 0)
 			break;
+		if(strcmp(my_choice, "Back") == 0)
+			break;
+
 		wrefresh(my_menu_win);
 	}
 	for (int k = 0; k < n_choices; k++)
@@ -119,6 +125,7 @@ int print_options_menu()
 		free_item(my_items[k]);
 	}
 	free(my_menu);
+	free(my_items);
 	unpost_menu(my_menu);
 	werase(my_menu_win);
 

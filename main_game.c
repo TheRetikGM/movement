@@ -93,7 +93,9 @@ void printRoom(WINDOW *win, int y, int x, char (*cor)[1225*5], char reg)
 
 }
 int out_int_choice;
-int main_game()
+int player1_xLoc, player1_yLoc;
+
+int main_game(int playerY, int playerX)
 {
 	initscr();
 	start_color();
@@ -101,14 +103,14 @@ int main_game()
 	nodelay(stdscr, true);
 	curs_set(FALSE);
 	
-	struct player player1;
 	int Maxx, Maxy;
 	unsigned int y = 25;
-	unsigned int x = 49;
+	unsigned int x = 50;
 	int c = 0;
 	char coordinates[1225][1225*5];
-	player1.xLoc = 1;
-	player1.yLoc = 1;
+	struct player player1;
+	player1.xLoc = playerX;
+	player1.yLoc = playerY;
 	player1.ch = '@';
 
 	int lastyLoc, lastxLoc;
@@ -216,12 +218,16 @@ int main_game()
 			default:
 				break;
 		}
+		player1_xLoc = player1.xLoc;
+		player1_yLoc = player1.yLoc;
+
 		if (c == 120)
 		{
 			break;
 		}
 		else if (c == 15)
 		{
+
 			break;
 		}
 		mvwaddch(win, player1.lastyLoc, player1.lastxLoc, ' ');
